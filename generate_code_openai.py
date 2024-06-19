@@ -1,7 +1,9 @@
 import os
+import re
 from openai import OpenAI
 import argparse
 from pprint import pprint
+import uuid
 
 ###################
 ### Definitions ###
@@ -39,8 +41,24 @@ def validate_length(prompt: str) -> bool:
     return len(prompt) <= MAX_INPUT_LENGTH
 
 
-def generate_code(prompt: str) -> str:
-    response = client.chat.completions.create(
+def extract_code(stream: str) -> str:
+    ### Regular expression pattern to find code blocks surrounded by triple backticks
+    pattern = r"```python(.*?)```"
+    code_raw = stream.choices[0].message.content
+    ### Using re.DOTALL to make the dot match newlines as well
+    code = re.findall(pattern, code_raw, re.DOTALL)[0].strip()
+    return code
+
+
+def write_code_to_file(code: str) -> str:
+    filename = f"manimflow_{uuid.uuid4().hex[:8]}"
+    with open(f"{filename}.py", "w+") as file:
+        file.write(code)
+    return filename
+
+
+def get_response_stream(prompt: str) -> str:
+    stream = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {
@@ -54,7 +72,7 @@ def generate_code(prompt: str) -> str:
         ],
         temperature=0.2,
     )
-    return response
+    return stream
 
 
 def main():
@@ -65,14 +83,10 @@ def main():
     print(f"User input: {user_input}")
 
     if validate_length(user_input):
-        response = generate_code(prompt=user_input)
-        pprint(response)
-        code = response.choices[0].message.content
-        pprint(code)
-
-        """f = open("temporary.txt","w+")
-        f.write(code)
-        f.close()"""
+        stream = get_response_stream(prompt=user_input)
+        code = extract_code(stream)
+        filename = write_code_to_file(code)
+        print(f"Code written to {filename}.py")
     else:
         raise ValueError(
             f"Input length is too long. Must be under {MAX_INPUT_LENGTH}. Submitted input is {user_input}"
