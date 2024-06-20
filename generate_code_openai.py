@@ -1,5 +1,6 @@
 import os
 import re
+import json
 from openai import OpenAI
 import argparse
 from pprint import pprint
@@ -41,22 +42,6 @@ def validate_length(prompt: str) -> bool:
     return len(prompt) <= MAX_INPUT_LENGTH
 
 
-def extract_code(stream: str) -> str:
-    ### Regular expression pattern to find code blocks surrounded by triple backticks
-    pattern = r"```python(.*?)```"
-    code_raw = stream.choices[0].message.content
-    ### Using re.DOTALL to make the dot match newlines as well
-    code = re.findall(pattern, code_raw, re.DOTALL)[0].strip()
-    return code
-
-
-def write_code_to_file(code: str) -> str:
-    filename = f"manimflow_{uuid.uuid4().hex[:8]}"
-    with open(f"{filename}.py", "w+") as file:
-        file.write(code)
-    return filename
-
-
 def get_response_stream(prompt: str) -> str:
     stream = client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -73,6 +58,22 @@ def get_response_stream(prompt: str) -> str:
         temperature=0.2,
     )
     return stream
+
+
+def extract_code(stream: str) -> str:
+    ### Regular expression pattern to find code blocks surrounded by triple backticks
+    pattern = r"```python(.*?)```"
+    code_raw = stream.choices[0].message.content
+    ### Using re.DOTALL to make the dot match newlines as well
+    code = re.findall(pattern, code_raw, re.DOTALL)[0].strip()
+    return code
+
+
+def write_code_to_file(code: str) -> str:
+    filename = f"manimflow_{uuid.uuid4().hex[:8]}"
+    with open(f"{filename}.py", "w+") as file:
+        file.write(code)
+    return filename
 
 
 def main():
