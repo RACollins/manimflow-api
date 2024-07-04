@@ -92,7 +92,7 @@ def main():
         raise ValueError(
             f"Input length is too long. Must be under {MAX_INPUT_LENGTH}. Submitted input is {user_input}"
         )
-
+    
 
 if __name__ == "__main__":
     main()
