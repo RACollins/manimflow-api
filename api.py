@@ -1,6 +1,6 @@
 from typing import Union
 from fastapi import FastAPI
-from generate_code_openai import get_response_stream, extract_code
+from generate_code import get_llm, get_response, extract_code
 
 app = FastAPI()
 
@@ -11,7 +11,7 @@ def read_root():
 
 
 @app.get("/prompt_to_code")
-async def prompt_to_code_api(prompt: str):
+async def prompt_to_code_api(prompt: str, llm: str) -> dict:
     """
     Generate code based on a given prompt.
 
@@ -20,6 +20,7 @@ async def prompt_to_code_api(prompt: str):
 
     Parameters:
     - prompt (str): The input prompt describing the desired code.
+    - llm (str): The name of the LLM used to generate the code.
 
     Returns:
     - dict: A dictionary containing the generated code under the key 'code'.
@@ -29,6 +30,7 @@ async def prompt_to_code_api(prompt: str):
         "code": "def example_function():\n    print('Hello, World!')"
     }
     """
-    stream = get_response_stream(prompt=prompt)
-    code = extract_code(stream)
+    llm = get_llm(llm_type=llm)
+    response = get_response(llm=llm, user_prompt=prompt)
+    code = extract_code(response)
     return {"code": code}
