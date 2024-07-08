@@ -1,9 +1,7 @@
 import os
 import re
-import json
 from openai import OpenAI
 import argparse
-from pprint import pprint
 import uuid
 
 ###################
