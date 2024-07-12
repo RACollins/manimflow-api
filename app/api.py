@@ -14,6 +14,18 @@ app = FastAPI()
 
 
 def validate_input_length(prompt: str):
+    """
+    Validates the length of the input prompt.
+
+    Args:
+        prompt (str): The input prompt to be validated.
+
+    Raises:
+        HTTPException: If the length of the prompt exceeds the maximum input length.
+
+    Returns:
+        None
+    """
     if len(prompt) >= MAX_INPUT_LENGTH:
         raise HTTPException(
             status_code=400,
