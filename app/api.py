@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from app.generate_code import get_llm, get_response, extract_code
+from mangum import Mangum
 
 ###################
 ### Definitions ###
@@ -7,6 +8,7 @@ from app.generate_code import get_llm, get_response, extract_code
 
 MAX_INPUT_LENGTH = 128
 app = FastAPI()
+handler = Mangum(app)
 
 #################
 ### Functions ###
