@@ -10,7 +10,5 @@ export class InfraStack extends cdk.Stack {
       code: lambda.Code.fromAsset("../app/"),
       handler: 'api.handler',
     })
-
-
   }
 }
