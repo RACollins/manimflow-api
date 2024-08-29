@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from app.generate_code import get_llm, get_response, extract_code
+from generate_code import get_llm, get_response, extract_code
 from mangum import Mangum
 
 ###################
@@ -7,8 +7,8 @@ from mangum import Mangum
 ###################
 
 MAX_INPUT_LENGTH = 128
-this_app = FastAPI()
-handler = Mangum(this_app)
+app = FastAPI()
+handler = Mangum(app)
 
 #################
 ### Functions ###
@@ -42,12 +42,12 @@ def validate_input_length(prompt: str):
 ##################
 
 
-@this_app.get("/")
+@app.get("/")
 def read_root():
     return {"Hello": "World!"}
 
 
-@this_app.get("/prompt_to_code")
+@app.get("/prompt_to_code")
 async def prompt_to_code_api(prompt: str, llm: str) -> dict:
     """
     Generate code based on a given prompt.
