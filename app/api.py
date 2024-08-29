@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
-from app.generate_code import get_llm, get_response, extract_code
+from generate_code import get_llm, get_response, extract_code
+from mangum import Mangum
 
 ###################
 ### Definitions ###
@@ -7,13 +8,28 @@ from app.generate_code import get_llm, get_response, extract_code
 
 MAX_INPUT_LENGTH = 128
 app = FastAPI()
+handler = Mangum(app)
 
 #################
 ### Functions ###
 #################
 
+# latest change 2024-08-29 00:07:00
+
 
 def validate_input_length(prompt: str):
+    """
+    Validates the length of the input prompt.
+
+    Args:
+        prompt (str): The input prompt to be validated.
+
+    Raises:
+        HTTPException: If the length of the prompt exceeds the maximum input length.
+
+    Returns:
+        None
+    """
     if len(prompt) >= MAX_INPUT_LENGTH:
         raise HTTPException(
             status_code=400,
