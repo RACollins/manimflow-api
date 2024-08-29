@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as apiGateway from 'aws-cdk-lib/aws-apigateway';
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -27,5 +28,14 @@ export class InfraStack extends cdk.Stack {
         "ANTHROPIC_API_KEY": process.env.ANTHROPIC_API_KEY ?? "",
       }
     });
+
+    /*Constructs the API Gateway rest api*/
+    const manimFlowApi = new apiGateway.RestApi(this, 'RestApi', {
+      restApiName: "Manim Flow API",
+    });
+
+    manimFlowApi.root.addProxy({
+        defaultIntegration: new apiGateway.LambdaIntegration(apiLambda),
+      })
   }
 }
