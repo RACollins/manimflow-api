@@ -7,10 +7,10 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>CopyKitt Tutorial | AI Generated Marketing</title>
+        <title>Manim Flow | AI Generated Manim Videos</title>
         <meta
           name="description"
-          content="Generate branding snippets for your product."
+          content="Generate maths videos with the Manim Python library by prompting an AI."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
