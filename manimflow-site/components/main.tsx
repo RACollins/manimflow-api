@@ -4,14 +4,31 @@ import styles from "../styles/Home.module.css";
 
 const Main: React.FC = () => {
   const ENDPOINT: string =
-    "http://127.0.0.1:8000/prompt_to_code";
+    "http://localhost:3000";
   const [prompt, setPrompt] = React.useState("");
+  const [generatedCode, setGeneratedCode] = React.useState("");
+  const [hasResult, setHasResult] = React.useState(false);
 
   const onSubmit = () => {
     console.log("Submitting " + prompt);
     fetch(`${ENDPOINT}?prompt=${prompt}&llm=openai`)
-    .then((res) => res.json())
-    .then(console.log);
+      .then((res) => res.json())
+      .then(onResult);
+  }
+
+  const onResult = (data: any) => {
+    setGeneratedCode(data.code);
+    setHasResult(true);
+  }
+
+  let resultsElement = null;
+
+  if (hasResult) {
+    resultsElement = (
+      <div>
+        {generatedCode}
+      </div>
+    );
   }
 
   return (
@@ -28,6 +45,7 @@ const Main: React.FC = () => {
         className={styles.inputtext} // Added CSS class to change text color to black
       ></input>
       <button onClick={onSubmit}>Generate</button>
+      {resultsElement}
     </div>
   )
 };
