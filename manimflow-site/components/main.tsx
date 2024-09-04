@@ -12,8 +12,11 @@ const Main: React.FC = () => {
   const onSubmit = () => {
     console.log("Submitting " + prompt);
     fetch(`${ENDPOINT}?prompt=${prompt}&llm=openai`)
-      .then((res) => res.json())
-      .then(onResult);
+      .then((response) => response.json())
+      .then(onResult)
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
   }
 
   const onResult = (data: any) => {
