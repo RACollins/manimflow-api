@@ -10,6 +10,7 @@ const Results: React.FC<ResultsProps> = (props) => {
   return (
     <>
       <p>Manimflow results</p>
+      <p>{props.prompt}</p>
       <p>{props.generatedCode}</p>
       <button onClick={props.onBack}>Back</button>
     </>

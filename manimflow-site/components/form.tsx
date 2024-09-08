@@ -9,6 +9,14 @@ interface FormProps {
 }
 
 const Form: React.FC<FormProps> = (props) => {
+
+  const isPromptvalid = props.prompt.length < props.characterLimit;
+  const updatePromptValue = (text: string) => {
+    if (text.length <= props.characterLimit) {
+      props.setPrompt(text);
+    }
+  };
+
   return (
     <>
       <p>
@@ -18,10 +26,13 @@ const Form: React.FC<FormProps> = (props) => {
         type="text"
         placeholder="Write prompt here..."
         value={props.prompt}
-        onChange={(e) => props.setPrompt(e.currentTarget.value)}
+        onChange={(e) => updatePromptValue(e.currentTarget.value)}
         className={styles.inputtext} // Added CSS class to change text color to black
       ></input>
-      <button onClick={props.onSubmit}>Generate</button>
+      <div>{props.prompt.length}/{props.characterLimit}</div>
+      <button onClick={props.onSubmit} disabled={!isPromptvalid}>
+        Generate
+      </button>
     </>
   );
 };

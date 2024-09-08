@@ -4,6 +4,7 @@ import Form from "./form";
 import Results from "./results";
 
 const Main: React.FC = () => {
+  const CHARACTER_LIMIT = 128;
   const ENDPOINT: string =
     "http://localhost:3000";
   const [prompt, setPrompt] = React.useState("");
@@ -13,7 +14,7 @@ const Main: React.FC = () => {
 
   const onSubmit = () => {
     console.log("Submitting " + prompt);
-    fetch(`${ENDPOINT}?prompt=${prompt}&llm=openai`)
+    fetch(`${ENDPOINT}?prompt=${prompt}&llm=anthropic`)
       .then((response) => response.json())
       .then(onResult)
       .catch(error => {
@@ -48,7 +49,7 @@ const Main: React.FC = () => {
         setPrompt={setPrompt}
         onSubmit={onSubmit}
         isLoading={false}
-        characterLimit={100} />
+        characterLimit={CHARACTER_LIMIT} />
     );
   }
 
