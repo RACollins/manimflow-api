@@ -1,6 +1,7 @@
 'use client'
 import React from "react";
-import styles from "../styles/Home.module.css";
+import Form from "./form";
+import Results from "./results";
 
 const Main: React.FC = () => {
   const ENDPOINT: string =
@@ -8,6 +9,7 @@ const Main: React.FC = () => {
   const [prompt, setPrompt] = React.useState("");
   const [generatedCode, setGeneratedCode] = React.useState("");
   const [hasResult, setHasResult] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const onSubmit = () => {
     console.log("Submitting " + prompt);
@@ -24,31 +26,36 @@ const Main: React.FC = () => {
     setHasResult(true);
   }
 
-  let resultsElement = null;
+  const onReset = () => {
+    setPrompt("");
+    setHasResult(false);
+    setIsLoading(false);
+  };
+
+  let displayedElement = null;
 
   if (hasResult) {
-    resultsElement = (
-      <div>
-        {generatedCode}
-      </div>
+    displayedElement = (
+      <Results
+        prompt={prompt}
+        generatedCode={generatedCode}
+        onBack={onReset} />
+    );
+  } else {
+    displayedElement = (
+      <Form
+        prompt={prompt}
+        setPrompt={setPrompt}
+        onSubmit={onSubmit}
+        isLoading={false}
+        characterLimit={100} />
     );
   }
 
   return (
     <div>
-      <h1>Manim Flow</h1>
-      <p>
-        Generate maths videos with the Manim Python library by prompting an AI.
-      </p>
-      <input
-        type="text"
-        placeholder="Write prompt here..."
-        value={prompt}
-        onChange={(e) => setPrompt(e.currentTarget.value)}
-        className={styles.inputtext} // Added CSS class to change text color to black
-      ></input>
-      <button onClick={onSubmit}>Generate</button>
-      {resultsElement}
+      <h1>Manimflow</h1>
+      {displayedElement}
     </div>
   )
 };
