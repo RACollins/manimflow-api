@@ -30,7 +30,7 @@ const Form: React.FC<FormProps> = (props) => {
         className={styles.inputtext} // Added CSS class to change text color to black
       ></input>
       <div>{props.prompt.length}/{props.characterLimit}</div>
-      <button onClick={props.onSubmit} disabled={!isPromptvalid}>
+      <button onClick={props.onSubmit} disabled={props.isLoading || !isPromptvalid}>
         Generate
       </button>
     </>

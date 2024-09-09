@@ -5,8 +5,7 @@ import Results from "./results";
 
 const Main: React.FC = () => {
   const CHARACTER_LIMIT = 128;
-  const ENDPOINT: string =
-    "http://localhost:3000";
+  const ENDPOINT: string = process.env.NEXT_PUBLIC_PROMPT_TO_CODE_API_ENDPOINT || "";
   const [prompt, setPrompt] = React.useState("");
   const [generatedCode, setGeneratedCode] = React.useState("");
   const [hasResult, setHasResult] = React.useState(false);
@@ -14,17 +13,25 @@ const Main: React.FC = () => {
 
   const onSubmit = () => {
     console.log("Submitting " + prompt);
+    setIsLoading(true);
     fetch(`${ENDPOINT}?prompt=${prompt}&llm=anthropic`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(onResult)
       .catch(error => {
         console.error("Error fetching data:", error);
+        setIsLoading(false);
       });
   }
 
   const onResult = (data: any) => {
     setGeneratedCode(data.code);
     setHasResult(true);
+    setIsLoading(false);
   }
 
   const onReset = () => {
@@ -48,7 +55,7 @@ const Main: React.FC = () => {
         prompt={prompt}
         setPrompt={setPrompt}
         onSubmit={onSubmit}
-        isLoading={false}
+        isLoading={isLoading}
         characterLimit={CHARACTER_LIMIT} />
     );
   }
