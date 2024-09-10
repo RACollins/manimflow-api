@@ -3,7 +3,6 @@ FROM amazonlinux:2023
 
 # Install Python 3.12 and pip
 RUN yum update -y
-#RUN yum install -y amazon-linux-extras
 RUN yum install -y python3.11
 RUN python3.11 -m ensurepip --upgrade
 RUN yum install -y python3-pip && \
