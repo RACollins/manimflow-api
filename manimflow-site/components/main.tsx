@@ -20,10 +20,6 @@ const Main: React.FC = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const contentType = response.headers.get("content-type");
-        console.log("contentType: " + contentType);
-        console.log("response.url: " + response.url);
-        console.log("response.status: " + response.status);
-        console.log("response.body: " + response.body);
         if (!contentType || !contentType.includes("application/json")) {
           throw new TypeError("Received non-JSON response");
         }
