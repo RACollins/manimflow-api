@@ -14,7 +14,7 @@ const Main: React.FC = () => {
   const onSubmit = () => {
     console.log("Submitting " + prompt);
     setIsLoading(true);
-    fetch(`${ENDPOINT}?prompt=${prompt}&llm=anthropic`)
+    fetch(`${ENDPOINT}?prompt=${prompt}&llm=openai`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
