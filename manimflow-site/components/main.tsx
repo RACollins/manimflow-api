@@ -21,6 +21,7 @@ const Main: React.FC = () => {
         }
         const contentType = response.headers.get("content-type");
         console.log("contentType: " + contentType);
+        console.log("response.url: " + response.url);
         if (!contentType || !contentType.includes("application/json")) {
           throw new TypeError("Received non-JSON response");
         }
