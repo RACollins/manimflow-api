@@ -66,7 +66,7 @@ const Main: React.FC = () => {
 
   return (
     <div>
-      <h1>Manimflow</h1>
+      <h1 className="text-3xl text-red-300">Manimflow</h1>
       {displayedElement}
     </div>
   )
