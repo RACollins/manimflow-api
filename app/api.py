@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from generate_code import get_llm, get_response, extract_code
 from mangum import Mangum
+from fastapi.middleware.cors import CORSMiddleware
 
 ###################
 ### Definitions ###
@@ -9,12 +10,19 @@ from mangum import Mangum
 MAX_INPUT_LENGTH = 128
 app = FastAPI()
 handler = Mangum(app)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 #################
 ### Functions ###
 #################
 
-# latest change 2024-08-29 00:07:00
+# latest change 2024-09-02 23:25:00
 
 
 def validate_input_length(prompt: str):
