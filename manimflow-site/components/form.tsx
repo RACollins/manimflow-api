@@ -9,7 +9,6 @@ interface FormProps {
 }
 
 const Form: React.FC<FormProps> = (props) => {
-
   const isPromptvalid = props.prompt.length < props.characterLimit;
   const updatePromptValue = (text: string) => {
     if (text.length <= props.characterLimit) {
@@ -29,8 +28,13 @@ const Form: React.FC<FormProps> = (props) => {
         onChange={(e) => updatePromptValue(e.currentTarget.value)}
         className={styles.inputtext} // Added CSS class to change text color to black
       ></input>
-      <div>{props.prompt.length}/{props.characterLimit}</div>
-      <button onClick={props.onSubmit} disabled={props.isLoading || !isPromptvalid}>
+      <div>
+        {props.prompt.length}/{props.characterLimit}
+      </div>
+      <button
+        onClick={props.onSubmit}
+        disabled={props.isLoading || !isPromptvalid}
+      >
         Generate
       </button>
     </>
