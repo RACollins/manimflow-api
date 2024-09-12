@@ -66,19 +66,15 @@ const Main: React.FC = () => {
   }
 
   const gradientTextStyle =
-    "text-white text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-teal-50 font-light w-fit mx-auto";
+    "text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-50 font-light w-fit mx-auto";
 
   return (
     <div className="h-screen flex">
       <div className="max-w-md m-auto p-2">
-        <div className="bg-gray-700 p-6 rounded-lg text-white">
+        <div className="bg-slate-700 p-6 rounded-lg text-white">
           <div className="text-center mb-6">
             <Image src={logo} alt="Manimflow logo" />
-            <h1
-              className={
-                gradientTextStyle + " text-3xl font-light"
-              }
-            >
+            <h1 className={gradientTextStyle + " text-3xl"}>
               AI Animation Assistant
             </h1>
           </div>
