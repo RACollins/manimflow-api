@@ -14,11 +14,19 @@ const Results: React.FC<ResultsProps> = (props) => {
       <div className="bg-white p-2 w-full rounded-md text-slate-700 my-3">
         {props.prompt}
       </div>
-      <Editor
-        height="20vh"
-        defaultLanguage="python"
-        defaultValue={props.generatedCode}
-      />
+      <div className="mt-2">
+        <Editor
+          height="30vh"
+          defaultLanguage="python"
+          options={{
+            fontSize: 14,
+            wordWrap: "off",
+          }}
+          theme="vs-dark"
+          defaultValue={props.generatedCode}
+        />
+      </div>
+
       <button className="generic-btn" onClick={props.onBack}>
         Back
       </button>
