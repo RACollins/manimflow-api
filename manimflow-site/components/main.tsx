@@ -7,8 +7,6 @@ import logo from "../public/manimflowlogo.svg";
 
 const Main: React.FC = () => {
   const CHARACTER_LIMIT = 128;
-  // const ENDPOINT: string =
-  //   process.env.NEXT_PUBLIC_PROMPT_TO_CODE_API_ENDPOINT || "";
   const [prompt, setPrompt] = React.useState("");
   const [generatedCode, setGeneratedCode] = React.useState("");
   const [hasResult, setHasResult] = React.useState(false);
@@ -17,7 +15,7 @@ const Main: React.FC = () => {
   const onSubmit = () => {
     console.log("Submitting " + prompt);
     setIsLoading(true);
-    fetch(`../api/prompt_to_code?prompt=${encodeURIComponent(prompt)}`)
+    fetch(`/api/prompt_to_code?prompt=${encodeURIComponent(prompt)}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

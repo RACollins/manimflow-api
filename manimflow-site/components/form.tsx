@@ -23,6 +23,12 @@ const Form: React.FC<FormProps> = (props) => {
     statusText = `Input must be less than ${props.characterLimit} characters.`;
   }
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && isPromptvalid && !props.isLoading) {
+      props.onSubmit();
+    }
+  };
+
   return (
     <>
       <div className="mb-6 text-slate-300">
@@ -37,6 +43,7 @@ const Form: React.FC<FormProps> = (props) => {
         placeholder="Write prompt here..."
         value={props.prompt}
         onChange={(e) => updatePromptValue(e.currentTarget.value)}
+        onKeyDown={handleKeyPress}
       ></input>
       <div className={statusColor + " flex justify-between my-2 mb-6 text-sm"}>
         <div>{statusText}</div>
