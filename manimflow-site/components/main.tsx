@@ -66,9 +66,13 @@ const Main: React.FC = () => {
   const gradientTextStyle =
     "text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-50 font-light w-fit mx-auto";
 
+  const containerClass = hasResult
+    ? "max-w-xl m-auto p-2"
+    : "max-w-md m-auto p-2";
+
   return (
     <div className="h-screen flex">
-      <div className="max-w-md m-auto p-2">
+      <div className={containerClass}>
         <div className="bg-slate-700 p-6 rounded-lg text-white">
           <div className="text-center mb-6">
             <Image src={logo} alt="Manimflow logo" />

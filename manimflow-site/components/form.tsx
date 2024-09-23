@@ -24,7 +24,7 @@ const Form: React.FC<FormProps> = (props) => {
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && isPromptvalid && !props.isLoading) {
+    if (e.key === "Enter" && isPromptvalid && !props.isLoading) {
       props.onSubmit();
     }
   };
@@ -33,7 +33,8 @@ const Form: React.FC<FormProps> = (props) => {
     <>
       <div className="mb-6 text-slate-300">
         <p>
-          Generate maths videos with the Manim Python library by prompting this AI assistant.
+          Generate maths videos with the Manim Python library by prompting this
+          AI assistant.
         </p>
       </div>
 

@@ -1,19 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 const ENDPOINT = process.env.PROMPT_TO_CODE_API_ENDPOINT || "";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const prompt = searchParams.get('prompt');
+  const prompt = searchParams.get("prompt");
 
   console.log(`Prompt: ${prompt}`);
 
   if (!prompt) {
-    return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
+    return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
   }
 
   try {
-    const response = await fetch(`${ENDPOINT}?prompt=${encodeURIComponent(prompt)}&llm=openai`);
+    const response = await fetch(
+      `${ENDPOINT}?prompt=${encodeURIComponent(prompt)}&llm=openai`
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -25,6 +27,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error fetching data:", error);
-    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
   }
 }
