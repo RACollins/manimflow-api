@@ -20,7 +20,7 @@ const Results: React.FC<ResultsProps> = (props) => {
           defaultLanguage="python"
           options={{
             fontSize: 14,
-            wordWrap: "off",
+            wordWrap: "on",
           }}
           theme="vs-dark"
           defaultValue={props.generatedCode}

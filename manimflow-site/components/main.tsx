@@ -7,8 +7,6 @@ import logo from "../public/manimflowlogo.svg";
 
 const Main: React.FC = () => {
   const CHARACTER_LIMIT = 128;
-  const ENDPOINT: string =
-    process.env.NEXT_PUBLIC_PROMPT_TO_CODE_API_ENDPOINT || "";
   const [prompt, setPrompt] = React.useState("");
   const [generatedCode, setGeneratedCode] = React.useState("");
   const [hasResult, setHasResult] = React.useState(false);
@@ -17,7 +15,7 @@ const Main: React.FC = () => {
   const onSubmit = () => {
     console.log("Submitting " + prompt);
     setIsLoading(true);
-    fetch(`${ENDPOINT}?prompt=${prompt}&llm=openai`)
+    fetch(`/api/prompt_to_code?prompt=${encodeURIComponent(prompt)}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -68,9 +66,13 @@ const Main: React.FC = () => {
   const gradientTextStyle =
     "text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-50 font-light w-fit mx-auto";
 
+  const containerClass = hasResult
+    ? "max-w-xl m-auto p-2"
+    : "max-w-md m-auto p-2";
+
   return (
     <div className="h-screen flex">
-      <div className="max-w-md m-auto p-2">
+      <div className={containerClass}>
         <div className="bg-slate-700 p-6 rounded-lg text-white">
           <div className="text-center mb-6">
             <Image src={logo} alt="Manimflow logo" />
