@@ -51,7 +51,7 @@ const Results: React.FC<ResultsProps> = (props) => {
         <button
           className="absolute bottom-2 right-5 z-10 bg-opacity-0 text-slate-300 p-1 rounded-md hover:bg-teal-100 hover:text-slate-600 transition-colors"
           onClick={handleCopy}
-          title="Copy code"
+          title="Copy code to clipboard"
         >
           <FaRegCopy size={14} />
         </button>
