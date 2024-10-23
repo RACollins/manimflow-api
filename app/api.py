@@ -22,8 +22,6 @@ app.add_middleware(
 ### Functions ###
 #################
 
-# latest change 2024-09-02 23:25:00
-
 
 def validate_input_length(prompt: str):
     """
