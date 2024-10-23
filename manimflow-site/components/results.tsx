@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import Editor, { OnMount } from "@monaco-editor/react";
+import type { editor } from "monaco-editor";
 import { FaRegCopy } from "react-icons/fa";
-import { editor } from "monaco-editor";
 import { v4 as uuidv4 } from "uuid";
 
 interface ResultsProps {
@@ -20,7 +20,7 @@ const Results: React.FC<ResultsProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleEditorDidMount: OnMount = (editor) => {
+  const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
   };
 
