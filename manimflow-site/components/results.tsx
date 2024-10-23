@@ -1,17 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
-import Editor, { OnMount } from "@monaco-editor/react";
-import type { editor } from "monaco-editor";
+import Editor, { OnMount, Monaco } from "@monaco-editor/react";
 import { FaRegCopy } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
+import { editor } from "monaco-editor";
 
 interface ResultsProps {
   prompt: string;
   generatedCode: string;
   onBack: () => void;
-}
-
-interface VideoResponse {
-  url: string;
 }
 
 const Results: React.FC<ResultsProps> = (props) => {
